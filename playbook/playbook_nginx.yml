@@ -1,9 +1,5 @@
 - hosts: webservers
 
-  vars:
-    root_dir: /usr/share/nginx/html 
-    nginx_port: 80
-
   tasks:
     - name: install nginx
       ansible.builtin.apt:
@@ -12,14 +8,14 @@
       become: yes
 
     - name: update index
-      ansible.builtin.copy:
-        src: files/index.html
+      ansible.builtin.template:
+        src: ../templates/index.html
         dest: "{{ root_dir }}/index.html"
       become: yes
 
     - name: update nginx config
       ansible.builtin.template:
-        src: templates/nginx.conf.j2
+        src: ../templates/nginx.conf.j2
         dest: /etc/nginx/nginx.conf
       notify: 
         - restart nginx
