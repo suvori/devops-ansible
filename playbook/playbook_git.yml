@@ -14,3 +14,18 @@
         update_cache: yes
       become: yes
       tags: cache
+
+    - name: add users
+      ansible.builtin.user:
+        name: "{{ item }}"
+        state: present
+        groups: root
+      become: yes
+      loop: "{{ users }}"
+    
+    - name: add git config
+      ansible.builtin.template:
+        src: ../templates/.gitconfig.j2
+        dest: /home/{{ item}}/.gitconfig
+      become: yes
+      loop: "{{ users }}"
