@@ -5,18 +5,21 @@
       ansible.builtin.apt:
         name: nginx
         state: latest
+      when: ansible_distribution == "Ubuntu"
       become: yes
 
     - name: update index
       ansible.builtin.template:
         src: ../templates/index.html
         dest: "{{ root_dir }}/index.html"
+      when: ansible_distribution == "Ubuntu"
       become: yes
 
     - name: update nginx config
       ansible.builtin.template:
         src: ../templates/nginx.conf.j2
         dest: /etc/nginx/nginx.conf
+      when: ansible_distribution == "Ubuntu"
       notify: 
         - restart nginx
       become: yes
@@ -26,4 +29,5 @@
       ansible.builtin.service:
         name: nginx
         state: reloaded
+      when: ansible_distribution == "Ubuntu"
       become: yes  
