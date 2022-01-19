@@ -5,3 +5,4 @@ users:
   - jaime
   - sansa
   - robert
+server_name_header: "This is server {{ ansible_hostname }}"
