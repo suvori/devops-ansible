@@ -8,6 +8,18 @@
       when: ansible_distribution == "Ubuntu"
       become: yes
 
+    - name: install cowsay
+      ansible.builtin.apt:
+        name: cowsay
+        state: present
+      when: ansible_distribution == "Ubuntu"
+      become: yes
+
+    - name: cowsay hello
+      ansible.builtin.shell: cowsay "Hello, from web server!"
+      register: cowsay_result
+      when: ansible_distribution == "Ubuntu"
+
     - name: update index
       ansible.builtin.template:
         src: ../templates/index.html
